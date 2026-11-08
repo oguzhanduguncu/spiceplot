@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/spiceplot/__init__.py
+src/spiceplot/cekirdek.py
+src/spiceplot/cli.py
+src/spiceplot.egg-info/PKG-INFO
+src/spiceplot.egg-info/SOURCES.txt
+src/spiceplot.egg-info/dependency_links.txt
+src/spiceplot.egg-info/entry_points.txt
+src/spiceplot.egg-info/requires.txt
+src/spiceplot.egg-info/top_level.txt

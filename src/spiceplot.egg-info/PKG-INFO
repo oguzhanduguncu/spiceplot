@@ -1,0 +1,36 @@
+Metadata-Version: 2.4
+Name: spiceplot
+Version: 0.1.0
+Summary: ngspice devrelerini arka planda çalıştırıp sonuçlarını numpy / matplotlib ile kullanma
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+
+# spiceplot
+
+ngspice devrelerini arka planda çalıştırıp sonuçlarını numpy / matplotlib ile kullanmak için küçük bir kütüphane.
+Xschem ya da ngspice'ın kendi pencerelerine gerek yok; Türkçe dil ayarındaki "I sorunu" (SIN → sın) içeride çözülür.
+
+## Kurulum
+    pip install ~/spiceplot            # ya da geliştirirken: pip install -e ~/spiceplot
+Gerekenler: ngspice (Fedora: `sudo dnf install ngspice`), numpy, matplotlib.
+
+## Komut satırı
+    spiceplot memristor.cir --liste
+    spiceplot memristor.cir --zaman "v(x1)" "v(x2)" --xy "v(a1):i(vi1)" "v(a2):i(vi2)" --atla 1
+    spiceplot memristor.cir --xy "v(a1):i(vi1)" --png dongu.png
+
+## Kütüphane
+```python
+from spiceplot import calistir, ciz
+S = calistir('memristor.cir')
+print(S.adlar())
+ciz(S, zaman=['v(x1)'], xy=['v(a1):i(vi1)'], atla=1.0)
+
+# parametre taraması: netlist'i metin olarak değiştirip tekrar tekrar çalıştır
+sablon = open('memristor.cir').read()
+for f in (0.5, 1, 5, 20):
+    S = calistir(metin=sablon.replace('SIN(0 1 1)', f'SIN(0 1 {f})'), klasor='.')
+```
+Notlar: akımlar `i(kaynak)` biçiminde; netlist'teki `.control … .endc` bloğu yok sayılır; birden fazla analiz varsa sonuncusu döner.
